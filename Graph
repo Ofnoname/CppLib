@@ -1,5 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
+#include <queue>
+#include <algorithm>
 
 template <unsigned N, unsigned M = N*(N-1)/2>
 class Graph;
@@ -7,7 +9,7 @@ class Graph;
 template <unsigned N, unsigned M>
 class Graph
 {
-	private:
+	protected:
 		using vertex = unsigned;
 
 		struct edge {
@@ -15,7 +17,7 @@ class Graph
 			vertex u, v, uv;
 		}edge_set[M];
 
-		std::vector<edge*> out_edge[N];
+		std::vector<edge*> out_edge[N+1]; //* 1based
 
 	public:
 		void add_edge(vertex u, vertex v, int w = 1, bool undirect = false) {
@@ -25,38 +27,57 @@ class Graph
 			out_edge[u].push_back(tc);
 			if (undirect) out_edge[v].push_back(tc);
 		}
+		void SPFA(vertex start, int *dis) {
+			std::queue<vertex> Q;
+			std::fill(dis, dis+N, 1e9);
+			std::bitset<N> inq;
 
-		void Dijistra(vertex start, int *ans);
-};
-
-template <unsigned N, unsigned M>
-void Graph<N, M>::Dijistra(vertex start, int *dis) {
-	struct cmp{
-		bool operator()(const int &A, const int &B){
-		return dis[A] < dis[B];
-		}
-	}
-	std::priority_queue <int, vector<int>, cmp> Q;
-	std::bitset <N> vis, inq;
-
-	dis[start] = 0;
-	Q.emplace(start);
-	while (Q.size()) {
-		vertex u = Q.top(); Q.pop();
-
-		for (auto e: out_edge[u]) {
-			vertex v = e->uv ^ u;
-			if (!vis[v] || dis[v]<dis[u]+e->w) {
-				vis[v] = 1;
-				dis[v] = dis[u] + e->w;
-
-				if (!inq[v]) {
-					inq[v] = 1;
-					Q.emplace(v);
+			Q.push(start), dis[start] = 0;
+			while (Q.size()) {
+				vertex u = Q.front(); Q.pop();
+				inq[u] = false;
+				
+				for (edge* p: out_edge[u]) {
+					vertex v = p->uv ^ u;
+					if (dis[v] > dis[u] + p->w) {
+						dis[v] = dis[u] + p->w;
+						if (!inq[v]) inq[v]=1, Q.push(v);
+					}
 				}
 			}
-		}
-	}
-}
+		} 
+
+		// void Dijistra(vertex start, int *ans);
+};
+
+// template <unsigned N, unsigned M>
+// void Graph<N, M>::Dijistra(vertex start, int *dis) {
+// 	struct cmp{
+// 		bool operator()(const int &A, const int &B){
+// 		return dis[A] < dis[B];
+// 		}
+// 	}
+// 	std::priority_queue <int, vector<int>, cmp> Q;
+// 	std::bitset <N> vis, inq;
+
+// 	dis[start] = 0;
+// 	Q.emplace(start);
+// 	while (Q.size()) {
+// 		vertex u = Q.top(); Q.pop();
+
+// 		for (auto e: out_edge[u]) {
+// 			vertex v = e->uv ^ u;
+// 			if (!vis[v] || dis[v]<dis[u]+e->w) {
+// 				vis[v] = 1;
+// 				dis[v] = dis[u] + e->w;
+
+// 				if (!inq[v]) {
+// 					inq[v] = 1;
+// 					Q.emplace(v);
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
 #endif
