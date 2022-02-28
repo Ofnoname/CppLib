@@ -10,7 +10,7 @@ class UFS
 	size_t N;
 
 	public:
-		UFS(size_t N) {
+		UFS(size_t _N): N(_N) {
 			std::iota(in, in + N, 0);
 			std::fill(size, size + N, 1);
 		}
