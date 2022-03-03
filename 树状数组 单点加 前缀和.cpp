@@ -1,17 +1,11 @@
-#ifndef BINTREE_H
-#define BINTREE_H
-
-//! 仅算术类型
-template <typename Type, unsigned N>
-class Bintree;
-
+//* 树状数组
 template <typename Type, unsigned N>
 class Bintree
 {
 	using index = unsigned;
 	private:
 		Type a[N + 1];
-		inline index lowbit(index x) {
+		index lowbit(index x) {
 			return x & -x;
 		}
 
@@ -25,4 +19,4 @@ class Bintree
 			return ans;
 		}
 };
-#endif
+//* 树状数组
