@@ -1,12 +1,4 @@
-#ifndef ISTREAM_H
-#define ISTREAM_H
-#include <cstdio>
-#include <cctype>
-#include <string>
-
-class Istream;
-
-//* 操作：读取整数，获取字符，获取字符串
+#ifndef FASTIN
 #define BUF_SIZE  unsigned(1 << 22) //* 4MB
 class Istream
 {
@@ -72,5 +64,4 @@ class Istream
 
 Istream Cin;
 #undef BUF_SIZE
-
 #endif
