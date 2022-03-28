@@ -1,14 +1,13 @@
 class UFS
 {
 	using ver = int;
-
-	ver in[MAX], size[MAX];
-	ver find(ver u) {
-		return in[u]==u ? u : (in[u] = find(in[u]));
-	}
-
-	size_t N;
-
+	private:
+		ver in[MAX], size[MAX];
+		ver find(ver u) {
+			return in[u]==u ? u : (in[u] = find(in[u]));
+		}
+		size_t N;
+		
 	public:
 		UFS(size_t _N): N(_N) {
 			std::iota(in, in + N, 0);
