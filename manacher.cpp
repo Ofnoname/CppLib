@@ -1,9 +1,11 @@
+//* 马拉车回文算法
+//* 2021-03-29
 class manacher
 {
-	public:
+	private:
 		string &str, nstr;
-
 		vector<int> f; //! 12345回文，则半径是3
+	public:
 		manacher(string &s, int n): str(s), nstr(n*2+1, '#'), f(n*2+1) {
 			for (auto p = s.begin(), q = nstr.begin()+1; p < s.end(); ++p)
 				*q = *p, q += 2;
