@@ -1,4 +1,4 @@
-class Tree
+class tree
 {
 	using ver = int;
 
