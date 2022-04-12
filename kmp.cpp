@@ -17,13 +17,16 @@ public:
 	}
 
 	void match(const string &S) { //! 匹配长串S
-		auto lst(0), ans(0);
+		auto lst(0);
 	
 		for (int i = 0; i < S.size(); ++i) {
-			while (lst && (lst==s.size() || S[i]!=s[lst])) lst = nxt[lst-1];
+			while (lst && (lst==s.size() || S[i]!=s[lst])) ;
 			if (S[i]==s[lst]) ++lst;
-			if (lst == s.size()) ++ans; //! 匹配成功
-		} cout << ans;
+			if (lst == s.size()) {//! 匹配成功
+				// ++ans;
+				// lst = nxt[lst-1];
+			} 
+		}
 	}
 
 	void print() {
