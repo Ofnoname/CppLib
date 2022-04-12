@@ -20,7 +20,8 @@ public:
 		auto lst(0);
 	
 		for (int i = 0; i < S.size(); ++i) {
-			while (lst && (lst==s.size() || S[i]!=s[lst])) ;
+			while (lst && S[i] != s[lst])
+				lst = nxt[lst-1];
 			if (S[i]==s[lst]) ++lst;
 			if (lst == s.size()) {//! 匹配成功
 				// ++ans;
