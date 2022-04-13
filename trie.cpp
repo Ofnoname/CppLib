@@ -17,7 +17,7 @@ public:
     void insert(const string &s) {
         auto p(root);
         for (auto c: s) {
-            auto &np = p->son[c - 'a'];
+            auto &np = p->son[c - 'a']; //! 小写
             if (!np) np = new node;
             p = np;
         } ++p->endcnt;
