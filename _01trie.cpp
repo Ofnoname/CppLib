@@ -1,5 +1,5 @@
 //* 01trie
-//* 2021-03-29
+//* 2022-03-29
 class _01trie
 {
 	struct node{
@@ -18,6 +18,7 @@ class _01trie
 		}
 		int find_maxxor(int val) const { //! 寻找和val异或最大的值
 			auto p(root); int ans = 0;
+			//! 未处理树为空的情况，会炸
 			for (int b = 30; ~b; --b) {
 				if (p->s[!(val >> b & 1)]) {
 					p = p->s[!(val >> b & 1)];
