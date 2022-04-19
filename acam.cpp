@@ -1,3 +1,12 @@
+/* 
+ *	AC自动机
+ *	2022-04-18
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAX = 1e5;
+
 class acam {
 	struct node 
 	{
