@@ -1,23 +1,36 @@
 class acam {
-	struct node {
-		int cnt, deg, endcnt; //! deg记录入度
-		node *fail, *son[26];
-	} *root, a[MAX], *cnt = a;
+	struct node 
+	{
+		vector<int> end; //! 以我结尾
+		int deg;
+		
+		node *fail, *to[26]; //! 26字母	
+	};
 
 private:
-	void insert(const string &s) {
-		auto p(root);
+	node pool[MAX], *cpool = pool; //! 字符总数
+	node *root = pool; //! 
 
-		for (auto c: s) {
-			auto& np(p->son[c - 'a']);
+	vector<string> s; //! 保存原串
+public:
+	acam() {
+		//? 1. 构造trie
+		int n; cin >> n;
+		for (int i = 0; i < n; ++i)
+		{
+			string t; cin >> t;
 
-			if (!np) np = cnt++;
-			p = np;
-		} ++p->endcnt;
-	}
+			auto p(root);
+			for (auto c: t) {
+				auto& np(p->son[c - 'a']); //! 小写
+				if (!np) np = ++cpool; p = np;
+			}
 
-	void getfail()
-	{
+			s.push_back(move(t));
+			p->end.push_back(i);
+		}
+
+		//? 2. 构造AC自动机
 		queue<node*> q;
 
 		root->fail = root; //! root下第一层节点的入队
@@ -44,34 +57,7 @@ private:
 		}
 	}
 
-public:
-	acam(): root(new node) 
-	{
-		int n; cin >> n;
-		while (n--) {
-			string s; cin >> s;
-			insert(s);
-		}
-		getfail();
-	}
-	void match(const string &s) 
-	{
-		auto p (root);
-		for (auto c: s) { //! 先过字符串
-            p = p->son[c-'a'];
-            ++p->cnt;
-        }
-
-		long long ans(0); queue<node*> q;
-		for (auto i(a); i < cnt; ++i) 
-            if (!i->deg) q.push(i);
-		while (!q.empty()) { 
-            auto p(q.front()); q.pop();
-            auto np(p->fail); np->deg--;
-
-            np->cnt += p->cnt;
-            if (p->cnt) ans += p->endcnt;
-            if (!np->deg) q.push(np);
-        } cout << ans;
+	void match() {
+		
 	}
 };
